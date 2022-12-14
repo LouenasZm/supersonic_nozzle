@@ -6,7 +6,7 @@
 #  ----------------------------------------------------------------------#
 #                                                                        #
 #  Released: 2022 (Louneas ZEMMOUR, 2022)                                #
-#  Library used:  PYLIB_MFC by J-C Chassain (Sorbonne University)        #
+#  Library used:  PYLIB_MFC by J-C Chassaing (Sorbonne University)       #
 #                                                                        #
 #                                                                        #
 # REFERENCES                                                             #
