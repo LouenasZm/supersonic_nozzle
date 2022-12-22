@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  9                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       volScalarField;
+    location    "0";
+    object      S;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    inlet
+	    // quite a fancy one...
+	    // inspired from  
+	    // https://youtu.be/2j_AdG98qZQ
+	    // FP, nightly built, 20221014
+    {
+	    type 	codedFixedValue;
+	    value 	uniform 0;
+	    
+	    name 	codedPatchBC;
+
+	    code
+	    #{
+	    //const scalar pi = constant::mathematical::pi;
+	    const fvPatch& patch = this->patch();
+	    const vectorField& Cf = patch.Cf();
+
+	    //const scalar l = 0.1;
+	    scalarField & field = *this;
+	    forAll(Cf,i)
+	    {
+	        //field[i] = abs(sin(2*pi*Cf[i].y()));
+	        //field[i] = Cf[i].y();
+		//if (1.0=>2.0)
+		//{
+		//	field[i] = 1.0;
+		//}
+		const scalar y = Cf[i].component(1);
+		if (y > 1e-5){
+			field[i] = 1.0;
+		}
+	    }
+            #};
+
+    }
+    
+    outlet 
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+    }
+
+    cylinder 
+    {
+        type            zeroGradient;
+    }
+
+    bottom
+    {
+        type            zeroGradient;
+    }
+
+    top
+    {
+        type            slip;
+    }
+
+    front
+    {
+        type            empty;
+    }
+
+    back
+    {
+        type            empty;
+    }
+}
+
+
+// ************************************************************************* //

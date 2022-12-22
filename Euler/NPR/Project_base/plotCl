@@ -1,0 +1,7 @@
+set title "Lift coefficient "
+set xlabel "Time"
+set ylabel "Cl"
+plot  "postProcessing/forceCoeffs_object/0/coefficient.dat" using 1:5 title 'point 1'
+pause 1
+reread
+

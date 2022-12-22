@@ -1,0 +1,21 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# settings
+
+#    # flag to enable computations in parallel mode
+#    parallel=true
+
+
+runApplication blockMesh
+
+runApplication changeDictionary # required for front-back patches compatibility, fix 20221013
+
+restore0Dir
+
+runApplication $(getApplication)
+## ## pisoFoam 
+## ## gnuplot Residuals -
+## ## https://www.cfd-online.com/Forums/openfoam-community-contributions/64146-tutorial-how-plot-residuals.html
