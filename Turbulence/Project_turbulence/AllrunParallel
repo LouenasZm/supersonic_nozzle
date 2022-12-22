@@ -1,0 +1,41 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# settings
+
+#    # flag to enable computations in parallel mode
+    parallel=true
+
+
+runApplication blockMesh
+
+# runApplication snappyHexMesh -overwrite
+
+# runApplication extrudeMesh
+
+# runApplication changeDictionary # required for front-back patches compatibility, fix 20221013
+
+restore0Dir
+
+#runApplication $(getApplication)
+## ## nohup pisoFoam > log &
+## ## gnuplot Residuals -
+## ## https://www.cfd-online.com/Forums/openfoam-community-contributions/64146-tutorial-how-plot-residuals.html
+
+if [ "$parallel" = true ]
+then
+
+    runApplication decomposePar
+
+    runParallel $(getApplication)
+
+    runApplication reconstructPar
+
+else
+
+    runApplication $(getApplication)
+
+fi
+

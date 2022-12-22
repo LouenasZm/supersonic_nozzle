@@ -1,0 +1,57 @@
+f.picella@gmail.com
+october 2022
+
+create a list of points (x,y,z) in a *.dat format
+	# how to create a *.dat list of points of a NACA profile?
+	http://airfoiltools.com/airfoil/naca4digit
+	then play around with it, then download a list of points as
+	'Source dat files'
+	from here, suppose we will work with the file NACA_5412.dat file
+	Another way, is to 'extract' points, using 'webplotdigitalizer',
+	I'll show this approach during our lecture
+
+	anyways, you'll be capable of reading-converting *.dat x-y (i.e. 2D) points with the following command
+	
+convert *.dat to *.geo file, for GMSH meshing
+	inspired and adapted from
+	https://github.com/phizz82/aerofoildat2gmsh 
+
+	python3 dat2gmsh2D2D.py INPUTFILE.dat
+
+	You'll end up having a INPUTFILE.geo file.
+
+convert *.geo in a *.stl file
+	'naive approach'
+		'export' as a STL, using default uptions
+	problem: too low resolution!
+	'improved approach': control 'meshing/resolution'
+	inside 'gmsh', go to option->mesh->general->element size factor
+	change the spatial resoltion, i.e. in how many elements per size to split geometrical features...
+	then 'mesh':
+		on the left-menu, click on 1D-mesh, then 2D mesh, wait...and enjoy the result.
+
+Then, all other operations are inside the 'Allrun' script, as always :)
+
+clean case
+	
+	./Allclean
+
+prepare case
+	
+	./Allrun
+
+launch application (in background...)
+	nohup pisoFoam > log &
+
+follow evolution of residuals in real time
+
+	gnuplot Residuals
+
+# compute A POSTERIORI yplus
+once that a given computation has taken over, yplus can be computed as following...
+pisoFoam -postProcess -funcs yPlus
+	
+
+
+Francesco
+
