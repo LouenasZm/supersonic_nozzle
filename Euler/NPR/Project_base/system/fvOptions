@@ -1,0 +1,10 @@
+limitT
+{
+	type	limitTemperature;
+	active	yes;
+	
+	selectionMode	all;
+	min	100;
+	max	800;
+	phase	gas;
+}
