@@ -46,7 +46,7 @@ boundaryField
 
     upperWall
     {
-        type            slip;
+        type            noSlip;
     }
 
     defaultFaces
